@@ -72,6 +72,13 @@ namespace rfp_dates {
             }
         }
 
+        /// <summary>
+        /// Generate a single calendar file
+        /// </summary>
+        /// <param name="DateStart">Date of event</param>
+        /// <param name="title">Subject of event</param>
+        /// <param name="basename">file basename</param>
+        /// <param name="desc">Body of event</param>
         static void ReminderICS(DateTime DateStart,String title,  String basename, string desc) {
             //create a new stringbuilder instance
             StringBuilder sb = new StringBuilder ();
@@ -125,6 +132,9 @@ namespace rfp_dates {
             sw.Close ();
         }
 
+// Pretty much ignore code below the lines. They were early
+// test for generation ical files.
+// They are left as references for different types of event files.
 
         public static void UseSample2() {
             DateTime DateStart = DateTime.Now.AddDays (1);
