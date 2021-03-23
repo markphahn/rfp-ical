@@ -39,7 +39,16 @@ dotnet run
 
 # Future Direction
 
-Accepting the arguments from the command line would be good.
+Have a better place to store the resulting ical files. Right now
+is is the MacOS `Downloads` directory. Actually *my* `Downloads`
+directory on *my* personal Mac. Not very portable.
+
+Accepting the arguments from the command line would be good. (Maybe,
+I prefer the `MyCurrentRFP.cs` file method at the moment so I can
+have my sensitve changes saved in a file for later reference. And
+because there would be a pile of arguments. `yaml` files are not
+a good solution; the interested user is probably `C#` enabled, so 
+why not have this stuff in `C#`.)
 
 # Code
 
