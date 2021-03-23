@@ -15,26 +15,26 @@ function to set the variables for `target`, `dueDate` and
 `description`.
 
 The `target` is the short name for the event and is used as the event
-subject. This string is also mangled and used as the ical file name
+subject. This string is also sanitized and used as the ical file name
 (with the `.ical` extension) appended.
 
 The `dueDate` is the date on which the submission is due. The event
-for this date does not lest the number of days left. 
+for this date does not show the number of days left. All the other
+events have the number of days to the submission date in the subject.
 
-The `description` is added to the body of the event.
+The `description` is added to the body of all the events.
 
 # Future Direction
 
 Accepting the arguments from the command line would be good.
 
-
 # Code
 
 The code is in the `rfp_dates` folder. All the code is in
-`Program.cs`. `Main` sets up the call to `GenerateICSLadder` which is
-the loop which walks back from the due date to today's date, creating
-a reminder for each weekday. `ReminderICS` generates a single ical
-file.
+`Program.cs`. `Main` sets up the call to `GenerateICSLadder`.
+`GenerateICSLadder` is the loop which walks back from the due date to
+today's date, creating a reminder for each weekday. `ReminderICS`
+generates a single ical file.
 
 Below `ReminderICS` are samples of generating single ical files. They
 are useful refernece for other types of ical events.
