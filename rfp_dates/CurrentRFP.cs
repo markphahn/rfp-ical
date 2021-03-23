@@ -9,8 +9,7 @@ namespace rfp_dates {
             description = "RFP for Example";
             ownerEmail = "owner@example.com";
 
-            var currentTime = DateTime.Now.AddDays (3);
-            dueDate = new DateTime (currentTime.Year, currentTime.Month, currentTime.Day);
+            var currentTime = new DateTime (2000, 12, 31);
         }
     }
 }

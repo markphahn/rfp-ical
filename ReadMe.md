@@ -10,9 +10,12 @@ https://tools.ietf.org/html/rfc5545
 # Usage
 
 This is a simple command line program written in C# using the .Net
-Framework v5.0. To use, first edit the few lines in the `Main` static
-function to set the variables for `target`, `dueDate` and
-`description`.
+Framework v5.0. 
+
+To use copy the `CurrentRFP.cs` file to `MyCurrentRFP.cs` and change the
+class name and constructor name to `MyCurrentRFP.cs`. Then edit your
+RFP details in the `MyCurrentRFP.cs` file. (`MyCurrentRFP.cs` is in 
+the `.gitignore` file to prevent checking specific RFP details.)
 
 The `target` is the short name for the event and is used as the event
 subject. This string is also sanitized and used as the ical file name
@@ -23,6 +26,16 @@ for this date does not show the number of days left. All the other
 events have the number of days to the submission date in the subject.
 
 The `description` is added to the body of all the events.
+
+The `ownerEmail` should be your calendar's email account.
+
+Then run the program with something like:
+```
+cd rfp_dates
+dotnet build
+dotnet run
+```
+(or press the `Run` button in Visual Studio.)
 
 # Future Direction
 

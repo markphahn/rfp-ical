@@ -454,3 +454,6 @@ ASALocalRun/
 
 # Local History for Visual Studio
 .localhistory/
+
+# avoid checking in personal RFP information
+rfp_dates/MyCurrentRFP.cs

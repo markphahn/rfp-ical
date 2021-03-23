@@ -2,6 +2,7 @@
 using System.Text;
 using System.IO;
 
+// reference material
 // https://stackoverflow.com/questions/46033843/how-to-create-ics-file-using-c
 // https://stackoverflow.com/questions/1716237/single-day-all-day-appointments-in-ics-files
 // https://www.iana.org/time-zones
@@ -9,42 +10,31 @@ using System.IO;
 
 namespace rfp_dates {
     class Program {
+        static string baseDirectory = "/Users/markhahn/Downloads"; 
         static void Main(string [] args) {
 
-            var currentTime = DateTime.Now.AddDays (-1);
-             Console.WriteLine (currentTime.ToLongDateString());
+            Console.WriteLine (Environment.SpecialFolder.Personal);
+            Console.WriteLine (Environment.GetFolderPath (Environment.SpecialFolder.UserProfile));
+            RFP x = new MyCurrentRFP ();
+
+            GenerateICSLadder (x);
+        }
+
+        private static void GenerateICSLadder(RFP currentRFP) {
+                    var currentTime = DateTime.Now.AddDays (-1);
+            Console.WriteLine (currentTime.ToLongDateString ());
             var currentDay = new DateTime (currentTime.Year, currentTime.Month, currentTime.Day);
             Console.WriteLine (currentDay.ToLongDateString ());
 
-            /*
-            var basename = "MAIN";
-            var target = "Main bid submission";
-            var dueDate = new DateTime (2021, 03, 12);
-            */
-
-            /*
-            var basename = "CIENT2";
-            var target = "Client 2 Submission";
-            var dueDate = new DateTime (2021, 03, 18);
-            */
-
-            var target = "Client 3 IT";
-            var dueDate = new DateTime (2021, 03, 29);
-            var description = "Client 3 Information Technology Agile Services";
-
-            GenerateICSLadder (currentDay, target, dueDate, description);
-        }
-
-        private static void GenerateICSLadder(DateTime currentDay, string target, DateTime dueDate, string desc) {
             var baseText = " days to ";
-            var basename = target.Replace (' ', '_');
+            var basename = currentRFP.Target.Replace (' ', '_');
             var dueBasename = basename + "_due";
-            var dueTitle = target + " due today";
-            Console.WriteLine ("{0:yyyy-MM-dd} {1} {2}", dueDate, dueTitle, dueBasename);
-            ReminderICS (dueDate, dueTitle, dueBasename, desc);
+            var dueTitle = currentRFP.Target + " due today";
+            Console.WriteLine ("{0:yyyy-MM-dd} {1} {2}", currentRFP.DueDate, dueTitle, dueBasename);
+            ReminderICS (currentRFP.DueDate, dueTitle, dueBasename, currentRFP.Description, currentRFP.OwnerEmail);
 
             int countDown = 1;
-            var nextDate = dueDate.AddDays (-1);
+            var nextDate = currentRFP.DueDate.AddDays (-1);
             while (nextDate > currentDay) {
                 bool createReminder = true;
                 // no reminders on weekends
@@ -59,10 +49,10 @@ namespace rfp_dates {
                 }
 
                 if (createReminder) {
-                    var name = countDown.ToString ("#") + baseText + target;
+                    var name = countDown.ToString ("#") + baseText + currentRFP.Target;
                     var icsbasename = basename + "_" + nextDate.ToString ("yyyyMMdd");
                     Console.WriteLine ("{0:yyyy-MM-dd} {1} {2}", nextDate, name, icsbasename);
-                    ReminderICS (nextDate, name, icsbasename, desc);
+                    ReminderICS (nextDate, name, icsbasename, currentRFP.Target, currentRFP.OwnerEmail);
 
                 } else {
                     Console.WriteLine (nextDate.DayOfWeek);
@@ -79,7 +69,7 @@ namespace rfp_dates {
         /// <param name="title">Subject of event</param>
         /// <param name="basename">file basename</param>
         /// <param name="desc">Body of event</param>
-        static void ReminderICS(DateTime DateStart,String title,  String basename, string desc) {
+        static void ReminderICS(DateTime DateStart, String title,  String basename, string desc, string ownerEmail) {
             //create a new stringbuilder instance
             StringBuilder sb = new StringBuilder ();
 
@@ -107,7 +97,7 @@ namespace rfp_dates {
             if (desc != null) {
                 sb.AppendLine ("DESCRIPTION:" + desc + "\\n\\n\\n");
             }
-            sb.AppendLine ("ORGANIZER:MAILTO:MHahn@ciber.com");
+            sb.AppendLine ("ORGANIZER:MAILTO:" + ownerEmail);
             sb.AppendLine ("SEQUENCE:0");
             sb.AppendLine ("X-MICROSOFT-CDO-BUSYSTATUS:FREE");
             sb.AppendLine ("X-MICROSOFT-CDO-ALLDAYEVENT:TRUE");
@@ -122,7 +112,7 @@ namespace rfp_dates {
             sb.AppendLine ("END:VEVENT");
             sb.AppendLine ("END:VCALENDAR");
 
-            var di = new DirectoryInfo ("/Users/markhahn/Downloads");
+            var di = new DirectoryInfo (baseDirectory);
             var fullname = Path.Combine (di.FullName, basename + ".ics");
             var fi = new FileInfo (fullname);
             Console.WriteLine (fi.FullName);
