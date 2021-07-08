@@ -12,7 +12,7 @@ https://tools.ietf.org/html/rfc5545
 This is a simple command line program written in C# using the .Net
 Framework v5.0. 
 
-To use copy the `CurrentRFP.cs` file to `MyCurrentRFP.cs` and change the
+To use: copy the `CurrentRFP.cs` file to `MyCurrentRFP.cs` and change the
 class name and constructor name to `MyCurrentRFP.cs`. Then edit your
 RFP details in the `MyCurrentRFP.cs` file. (`MyCurrentRFP.cs` is in 
 the `.gitignore` file to prevent checking specific RFP details.)
