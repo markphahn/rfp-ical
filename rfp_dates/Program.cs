@@ -27,7 +27,8 @@ namespace rfp_dates {
             Console.WriteLine (currentDay.ToLongDateString ());
 
             var baseText = " days to ";
-            var basename = currentRFP.Target.Replace (' ', '_');
+            var basename = currentRFP.Target.Replace (' ', '_').Replace ('/', '_')
+                .Replace (':', '_').Replace ('\'', '_').Replace ('.', '_').Replace (',', '_');
             var dueBasename = basename + "_due";
             var dueTitle = currentRFP.Target + " due today";
             Console.WriteLine ("{0:yyyy-MM-dd} {1} {2}", currentRFP.DueDate, dueTitle, dueBasename);
@@ -52,7 +53,7 @@ namespace rfp_dates {
                     var name = countDown.ToString ("#") + baseText + currentRFP.Target;
                     var icsbasename = basename + "_" + nextDate.ToString ("yyyyMMdd");
                     Console.WriteLine ("{0:yyyy-MM-dd} {1} {2}", nextDate, name, icsbasename);
-                    ReminderICS (nextDate, name, icsbasename, currentRFP.Target, currentRFP.OwnerEmail);
+                    ReminderICS (nextDate, name, icsbasename, currentRFP.Description, currentRFP.OwnerEmail);
 
                 } else {
                     Console.WriteLine (nextDate.DayOfWeek);
